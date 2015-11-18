@@ -55,6 +55,18 @@ class Validation {
         this.value = this.data[name];
         return this;
     }
+
+    static koaMiddleware(ctx, next) {
+        return next().catch(e => {
+            console.log(e)
+            if ( e.message == 'ValidationError') {
+                ctx.status = 400;
+                ctx.body = e._errors;
+            } else {
+                throw e;
+            }
+        });
+    }
 }
 
 var sanitizers = [
