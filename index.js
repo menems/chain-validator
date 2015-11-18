@@ -58,7 +58,6 @@ class Validation {
 
     static koaMiddleware(ctx, next) {
         return next().catch(e => {
-            console.log(e)
             if ( e.message == 'ValidationError') {
                 ctx.status = 400;
                 ctx.body = e._errors;
